@@ -30,6 +30,7 @@ class _NotasPageState extends State<NotasPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        backgroundColor: Colors.blue,
       ),
       body: ListView(
         children: <Widget>[
@@ -47,10 +48,13 @@ class _NotasPageState extends State<NotasPage> {
                     return Card(
                       color: notas[index].corFundo,
                       child: ListTile(
-                        title: Text(notas[index].titulo),
-                        subtitle: Text(notas[index].conteudo),
-                        trailing: Text(notas[index].data),
-                      ),
+                          title: Text(notas[index].titulo),
+                          subtitle: Text(notas[index].conteudo),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            color: Colors.red,
+                            onPressed: () => abrirModalExclusao(notas[index]),
+                          )),
                     );
                   },
                 );
@@ -148,6 +152,36 @@ class _NotasPageState extends State<NotasPage> {
                   },
                 ),
               ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void abrirModalExclusao(NotaModel nota) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Deseja realmente excluir!'),
+          actionsAlignment: MainAxisAlignment.end,
+          actionsPadding: EdgeInsets.symmetric(horizontal: 12),
+          actions: [
+            ElevatedButton(
+              child: Icon(
+                Icons.cancel,
+                color: Colors.red,
+              ),
+              onPressed: () {
+                Modular.to.pop();
+              },
+            ),
+            ElevatedButton(
+              child: Icon(Icons.save),
+              onPressed: () {
+                notasCtrl.removerNota(nota);
+              },
             ),
           ],
         );

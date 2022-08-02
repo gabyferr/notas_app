@@ -19,6 +19,12 @@ class NotasCotroller extends NotifierStore<Exception, List<NotaModel>> {
     listarNotas();
     Modular.to.pop();
   }
+
+  void removerNota(NotaModel value) {
+    minhasNotas.remove(value);
+    listarNotas();
+    Modular.to.pop();
+  }
 }
 
 
